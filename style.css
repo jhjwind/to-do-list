@@ -1,0 +1,144 @@
+body {
+	width: 800px;
+	margin: 20px auto;
+	background: #FFFFFF;
+	text-align: center;
+}
+
+input, span, ul, li, div {
+	border-radius: 10px;
+	-moz-border-radius: 18px;
+}
+
+
+#container {
+	width: 600px;
+	margin: 0px auto;
+	text-align: left;
+	font: normal 22px "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+#title{
+	float: left;
+	width: 290px;
+	font-size: 30px;
+}
+
+/* textbox */
+
+#mainTextInput {
+	margin: 0 auto;
+	text-align: center;
+	color: #484848;
+	width: 580px;
+	height: 25px;
+	margin: 30px 10px 20px;
+	padding: 6px;
+	color:  #707070;
+	font-size: 28px;
+	border: 0px;
+	border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-bottom: 2px dashed #D8D8D8;
+	vertical-align: baseline; 
+}
+
+#updateTextInput{
+	background: #E8E8E8;
+	margin: 0 auto;
+	text-align: left;
+	width: 580px;
+	height: 25px;
+	margin-bottom: 5px;
+	font-size: 22px;
+	padding: 10px;
+	border: 0px;
+}
+
+/* clearButton */
+#clearButton {
+	background: #D8D8D8;
+	padding-left: 10px;
+	width: 60px;
+	float: right;
+	position: relative;
+	top: -52px;
+	display: none;
+	cursor: pointer;
+	font-size: 20px;
+}
+
+/* Info */
+#info{
+	background: #E8E8E8;
+	margin-top: 20px;
+	padding: 25px 0px;
+	width: 250px;
+	height: 45px;
+	float: right;
+	font-size: 26px;
+	display: none;
+	text-align: center;
+}
+
+/* list */
+#lists {
+	margin-left: -40px;
+}
+
+.ud:hover{
+	cursor: pointer;
+}
+
+#lists li{
+	background: #E8E8E8;
+	margin-bottom: 5px;
+	padding: 10px;
+	list-style: none;
+	line-height: normal;
+	text-align: left;
+}
+
+#lists .active {
+/* 	background: #888888; */
+}
+
+#lists .delete{
+	color: #FF0033;
+	margin-right: 10px;
+}
+
+#lists .update{
+	color: #009900;
+}
+
+#lists .ud{
+	float:right;
+}
+
+
+/* massiveWeapon/Delete All */
+#massiveWeapon{
+	background: #E8E8E8;
+	margin: 50px auto 5px;
+	padding-top: 15px;
+	width: 150px;
+	height: 30px;
+	font-size: 14px;
+	color: #FF0033;
+	text-align: center;
+	display: none;
+}
+
+#massiveWeapon:hover{
+	cursor: pointer;
+}
+
+/* Developer */
+#developer{
+	display:block;
+	font: normal 12px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	position: fixed;
+	bottom: 5px;
+	left: 5px;
+}
