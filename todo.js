@@ -14,6 +14,10 @@ todo.deleteView = function (item){
 	if($(todo.list).children().length == 0){
 		todo.updateInfo("Weeee! Nothing on the list!");
 	};
+	
+	if($(todo.list).children().length == 1){
+		$('#massiveWeapon').css('display', 'none');
+	};
 }
 
 todo.addView = function (res){
@@ -24,6 +28,10 @@ todo.addView = function (res){
 	// add new entry to the top of the list
 	var newEntry = $("<li/>",{"id": res.id, "text": res.content});
 	$(todo.list).prepend(newEntry);
+	// Extend the width if msg is too long
+	if(res.content.length >= 36){
+		$('#'+res.id).css("height","50px");
+	}
 	// if the list has more than two entries, grants the permission to use massive weapon/delete all
 	if($(todo.list).children().length >= 2){
 		$('#massiveWeapon').css('display', 'block');
@@ -36,6 +44,10 @@ todo.updateView = function (id, content){
 	$("#updateTextForm").after(newElement);
 	// remove the text area
 	$("#updateTextForm").remove();
+	// Extend the width if msg is too long
+	if(content.length >= 42){
+		$('#'+res.id).css("height","50px");
+	}
 }
 
 todo.deleteAllView = function (){
@@ -60,7 +72,7 @@ todo.updateInfo = function (text){
 	// Wait 1.5s to fade out the information
 	setTimeout(function(){
 	$('#info').fadeOut('slow');
-	},1500);
+	},2000);
 }
 
 // Render to-do list view
@@ -72,6 +84,10 @@ todo.getView = function (res){
 	// update the list view
 	for (var i=0; i< res.length; i++){
 		$("<li/>", {"id": res[i].id, "text": res[i].content}).appendTo(todo.list);
+		// Extend the width if msg is too long
+		if(res[i].content.length >= 42){
+			$('#'+res[i].id).css("height","50px");
+		}
 	}
 }
 
@@ -145,12 +161,15 @@ $("#mainTextForm").live("submit", function(){
 	var content = $(this).children().filter("#mainTextInput").attr("value");
 	var text = $.trim(content);
 	// do not add if text is null
-	if (text !== ''){
-		todo.addList(text);
-		content = null;
+	if (text == ''){
+		todo.updateInfo("It's an empty entry");
+	}
+	else if ( text.length > 48){
+		todo.updateInfo("message's too long");
 	}
 	else{
-		todo.updateInfo("It's an empty entry");
+		todo.addList(text);
+		content = null;
 	}
 });
 
@@ -161,11 +180,14 @@ todo.bindSubmitEvent = function(itemId){
 		var content = $(this).children().filter("#updateTextInput").attr("value");
 		var newContent = $.trim(content);
 		// do not add if text is null
-		if (newContent !== ''){
-			todo.updateList(itemId,newContent);
+		if (newContent == ''){
+			todo.updateInfo("It's an empty entry");
+		}
+		else if (newContent.length > 48){
+			todo.updateInfo("message's too long");
 		}
 		else{
-			todo.updateInfo("It's an empty entry");
+			todo.updateList(itemId,newContent);
 		}
 	});
 }

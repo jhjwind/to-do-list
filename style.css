@@ -15,32 +15,39 @@ input, span, ul, li, div {
 	width: 600px;
 	margin: 0px auto;
 	text-align: left;
-	font: normal 22px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: normal 22px "Trebuchet MS" Arial Helvetica sans-serif;
 }
 
 #title{
 	float: left;
 	width: 290px;
 	font-size: 30px;
+	margin-bottom: 60px;
 }
 
 /* textbox */
 
+#mainTextForm {
+	width: 580px;
+	margin: 20px 10px;
+	vertical-align: baseline;
+	border-bottom: 3px dashed #D8D8D8;
+}
+
 #mainTextInput {
 	margin: 0 auto;
 	text-align: center;
-	color: #484848;
-	width: 580px;
+	color: #383838;
+	width: 500px;
 	height: 25px;
-	margin: 30px 10px 20px;
 	padding: 6px;
 	color:  #707070;
 	font-size: 28px;
 	border: 0px;
 	border-radius: 0px;
 	-moz-border-radius: 0px;
-	border-bottom: 2px dashed #D8D8D8;
-	vertical-align: baseline; 
+	
+	 
 }
 
 #updateTextInput{
@@ -58,14 +65,16 @@ input, span, ul, li, div {
 /* clearButton */
 #clearButton {
 	background: #D8D8D8;
-	padding-left: 10px;
-	width: 60px;
+	padding-left: 13px;
+	padding-top: 2px;
+	width: 58px;
+	height: 25px;
 	float: right;
 	position: relative;
-	top: -52px;
+	top: -54px;
 	display: none;
 	cursor: pointer;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 /* Info */
@@ -88,9 +97,11 @@ input, span, ul, li, div {
 
 .ud:hover{
 	cursor: pointer;
+	text-decoration: underline;
 }
 
 #lists li{
+	width: 580px;
 	background: #E8E8E8;
 	margin-bottom: 5px;
 	padding: 10px;
@@ -114,6 +125,7 @@ input, span, ul, li, div {
 
 #lists .ud{
 	float:right;
+	margin-left: 5px;
 }
 
 
@@ -137,8 +149,23 @@ input, span, ul, li, div {
 /* Developer */
 #developer{
 	display:block;
-	font: normal 12px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font: normal 12px "Trebuchet MS" Arial Helvetica sans-serif;
 	position: fixed;
-	bottom: 5px;
-	left: 5px;
+	bottom: 15px;
+	left: 15px;
+}
+
+/* githubIcon */
+#github {
+	width: 96px;
+	height: 96px;
+	position: fixed;
+	font: normal 12px "Trebuchet MS" Arial Helvetica sans-serif;
+	bottom: 20px;
+	right: 20px;
+}
+
+#github a{
+	color: black;
+	text-decoration: none;
 }

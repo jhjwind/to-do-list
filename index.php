@@ -16,31 +16,37 @@
 		<div id="title">
 			<h1>To-Do List</h1>
 		</div>
+		<!-- 		End of div#title -->
 		<div id="info">
 		</div>
-		<!--End of title-->		
+		<!--End of div#info-->		
 		<form id="mainTextForm" action="" onsubmit="return false;">
 			<input id="mainTextInput" value=" I have to ...."/>
 		</form>
-		<!-- End of mainTextForm -->
+		<!-- End of div#mainTextForm -->
 		<div id="clearButton">
 			Clear
 		</div>
-		<!--End of entryNew-->
+		<!--End of div#entryNew-->
 		<div>
 			<ul id="lists">
 			</ul>
 		</div>
-		<!--End of lists-->
+		<!--End of div#lists-->
 		<div id="massiveWeapon">
 			Screw it! Delete all!
 		</div>
-		<!-- End of massiveWeapon -->
+		<!-- End of div#massiveWeapon -->
 	</div>
-	<!--End of container-->
+	<!--End of div#container-->
 	<div id="developer">
 		Created by: Hanjie Ji
 	</div>
+	<!-- 	End of div#developer -->
+	<div id="github">
+	<a href="https://github.com/jhjwind/to-do-list">Source code<img src="github.png" alt="link to the sourcecode of this application on GitHub" /></a>
+	</div>
+	<!-- 	End of div#github -->
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>	
 	<script type="text/javascript" src="todo.js"></script>
 </body>
