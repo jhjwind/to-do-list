@@ -2,9 +2,9 @@ var todo = {};
 
 todo.txtNew = $('#txtNew');
 todo.list = $("#lists");
-todo.oldEntry = ''; // for storing old entry
-todo.options = "<div class='ud'><a class='delete'>Delete</a><a class='update'>Update</a></div>";
-todo.form = "<form id='updateTextForm' action='' onsubmit='return false;'><input id='updateTextInput' /></form>";
+todo.oldEntry = ''; // storage of old entry
+todo.options = "<div class='ud'><a class='update'>Update</a><a class='delete'>Delete</a></div>";
+todo.form = "<form id='updateTextForm' action='' onsubmit='return false;'><input id='updateTextInput' type='text'/></form>";
 
 // View
 todo.deleteView = function (item){
@@ -14,7 +14,7 @@ todo.deleteView = function (item){
 	if($(todo.list).children().length == 0){
 		todo.updateInfo("Weeee! Nothing on the list!");
 	};
-	
+	// hide the massive weapon when there is only one entry
 	if($(todo.list).children().length == 1){
 		$('#massiveWeapon').css('display', 'none');
 	};
@@ -26,53 +26,15 @@ todo.addView = function (res){
 	// de-focus the text area
 	$('input').blur();
 	// add new entry to the top of the list
-	var newEntry = $("<li/>",{"id": res.id, "text": res.content});
-	$(todo.list).prepend(newEntry);
+	$("<li/>",{"id": res.id, "text": res.content}).prependTo(todo.list);
 	// Extend the width if msg is too long
-	if(res.content.length >= 36){
+	if(res.content.length >= 35){
 		$('#'+res.id).css("height","50px");
 	}
 	// if the list has more than two entries, grants the permission to use massive weapon/delete all
 	if($(todo.list).children().length >= 2){
 		$('#massiveWeapon').css('display', 'block');
 	};
-}
-
-todo.updateView = function (id, content){
-	// update the entry 
-	var newElement = $("<li/>", {"id": id, "text": content});
-	$("#updateTextForm").after(newElement);
-	// remove the text area
-	$("#updateTextForm").remove();
-	// Extend the width if msg is too long
-	if(content.length >= 42){
-		$('#'+res.id).css("height","50px");
-	}
-}
-
-todo.deleteAllView = function (){
-	// remove every entry in the window
-	$(todo.list).children().remove();
-	// hide the massive weapon
-	$('#massiveWeapon').css('display', 'none');
-	// update happy info 
-	todo.updateInfo("Weeee! Nothing on the list!");
-}
-
-todo.formView = function (item){
-	// replace the old entry with form
-	$(item).replaceWith(todo.form);
-	// set focus on text area
-	$('#updateTextForm input').focus();
-}
-
-// Update Information Area on the top right of the window
-todo.updateInfo = function (text){
-	$("#info").html(text).fadeIn("slow");
-	// Wait 1.5s to fade out the information
-	setTimeout(function(){
-	$('#info').fadeOut('slow');
-	},2000);
 }
 
 // Render to-do list view
@@ -85,16 +47,64 @@ todo.getView = function (res){
 	for (var i=0; i< res.length; i++){
 		$("<li/>", {"id": res[i].id, "text": res[i].content}).appendTo(todo.list);
 		// Extend the width if msg is too long
-		if(res[i].content.length >= 42){
+		if(res[i].content.length >= 35){
 			$('#'+res[i].id).css("height","50px");
 		}
 	}
 }
 
+todo.updateView = function (id, content){
+	var newLiElement = $('#'+id);
+	// update the entry 
+	var newElement = $("<li/>", {"id": id, "text": content});
+	// remove the text area
+	$("#updateTextForm").parent().replaceWith(newElement);
+	// enable option view
+	$(newLiElement).removeClass("activeIsDisabled");
+	// Extend the width if msg is too long
+	if(content.length >= 35){
+		$(newLiElement).css("height","50px");
+	}
+}
+
+todo.deleteAllView = function (){
+	// remove every entry in the window
+	$(todo.list).children().remove();
+	// hide the massive weapon
+	$('#massiveWeapon').css('display', 'none');
+	// update happy info 
+	todo.updateInfo("Weeee! Nothing on the list!");
+}
+
+todo.formView = function (id){
+	// replace the old entry with form
+	$(todo.form).hide().appendTo('#'+id).slideDown().css("text-decoration","none");
+	// Remove the options view and disable adding options view
+	$("#updateTextForm").parent().removeClass("active").addClass("activeIsDisabled");
+	// set focus on text area
+	$('#updateTextForm input').focus();
+}
+
+todo.formCancellView = function (e){
+	// enable option view
+	$(e).parent().removeClass("activeIsDisabled");
+	// remove the form
+	$(e).remove();
+}
+
+// Update Information Area on the top right of the window
+todo.updateInfo = function (text){
+	$("#info").html(text).fadeIn("slow");
+	// Wait 1.5s to fade out the information
+	setTimeout(function(){
+	$('#info').fadeOut('slow');
+	}, 2000);
+}
+
 // Handlers / Model
 
 // Handler for mouse enter and leave an entry
-$('li').live('mouseover mouseleave', function(event){
+$('li:not(.activeIsDisabled)').live('mouseover mouseleave', function(event){
 	if (event.type == 'mouseover'){
 		todo.addOptions($(this));
 	}
@@ -113,9 +123,13 @@ $(".delete").live("click", function(){
 $(".update").live("click", function(){
 	var item = $(this).parent().parent();
 	var id = $(item).attr('id');
-	// keep the old entry in case user cancell the update 
+	// keep the old entry in case user cancells the update 
 	todo.oldEntry = item;
-	todo.formView(item);
+	// remove the delete and update div
+	$(item).children().filter("div").remove();
+	// Update the view--- add form
+	todo.formView(id);
+	// bind the submit event to form
 	todo.bindSubmitEvent(id);
 });
 
@@ -129,12 +143,12 @@ $("#updateTextForm").live('keydown', function(e){
 	}
 });
 */
-$("#updateTextForm").live('blur', function(e){
-	$(this).replaceWith(todo.oldEntry);
+$("#updateTextForm").live('blur', function(){
+	todo.formCancellView(this);
 });
 
 // Hander for focus event for  both textboxs
-$('#mainTextInput, #updateTextInput').focus(function(){
+$('#mainTextInput').focus(function(){
 	$(this).css("color", "#000000");
 	$(this).css("text-align", "left");
 	$(this).css("font-size", "22px");
@@ -164,10 +178,11 @@ $("#mainTextForm").live("submit", function(){
 	if (text == ''){
 		todo.updateInfo("It's an empty entry");
 	}
-	else if ( text.length > 48){
+	else if ( text.length > 58){
 		todo.updateInfo("message's too long");
 	}
 	else{
+		todo.updateInfo("Adding....");
 		todo.addList(text);
 		content = null;
 	}
@@ -183,10 +198,11 @@ todo.bindSubmitEvent = function(itemId){
 		if (newContent == ''){
 			todo.updateInfo("It's an empty entry");
 		}
-		else if (newContent.length > 48){
+		else if (newContent.length > 58){
 			todo.updateInfo("message's too long");
 		}
 		else{
+			todo.updateInfo("Updating....");
 			todo.updateList(itemId,newContent);
 		}
 	});
@@ -205,7 +221,7 @@ todo.addOptions = function(item){
 	if($(item).children().hasClass("ud") == false){
 		$(item).append(todo.options);
 	}
-}
+};
 
 //remove the "Delete" and "Update" options to an entry
 todo.removeOptions = function(item){
@@ -213,7 +229,7 @@ todo.removeOptions = function(item){
 	if($(item).children().hasClass("ud")){
 		$(item).children(".ud").remove();
 	}
-}
+};
 
 // Four methods for to-do lists
 // "op" stand for the five operations of the database:
@@ -241,7 +257,7 @@ todo.getList = function (){
 			todo.getView(res);			
 		}
 	});
-}
+};
 
 todo.addList = function (text){
 	$.ajax({

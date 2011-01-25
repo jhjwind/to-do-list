@@ -47,7 +47,7 @@
 	<a href="https://github.com/jhjwind/to-do-list">Source code<img src="github.png" alt="link to the sourcecode of this application on GitHub" /></a>
 	</div>
 	<!-- 	End of div#github -->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>	
 	<script type="text/javascript" src="todo.js"></script>
 </body>
 </html>
